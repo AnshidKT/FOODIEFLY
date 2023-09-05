@@ -6,21 +6,30 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 const Validation = ({navigation}) => {
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [error, setError] = useState('');
 
+  const handleGetOTP = () => {
+    const mobileNumberPattern = /^\d{10}$/;
 
-  
+    if (!mobileNumberPattern.test(mobileNumber)) {
+      setError('Please enter a valid 10-digit mobile number.');
+    } else {
+      navigation.navigate('Landing');
+    }
+  };
+
   return (
-  
     <View
       style={{
         alignItems: 'center',
         width: '100%',
         height: '100%',
         backgroundColor: 'white',
-        justifyContent:'space-between'
+        justifyContent: 'space-between',
       }}>
       <View
         style={{
@@ -45,7 +54,8 @@ const Validation = ({navigation}) => {
             height: 40,
             borderRadius: 10,
             alignItems: 'center',
-          }}>
+          }}
+          onPress={() => navigation.navigate('Landing')}>
           <Text
             style={{
               fontSize: 15,
@@ -94,22 +104,36 @@ const Validation = ({navigation}) => {
           </View>
 
           <TextInput
-            style={{fontSize: 16, marginLeft: 10,color:'black'}}
+            style={{fontSize: 16, marginLeft: 10, color: 'black'}}
             placeholder="10 digit mobile number"
             placeholderTextColor="gray"
+            onChangeText={text => {
+              setMobileNumber(text);
+              setError(''); // Clear the error message when the user types
+            }}
           />
+        </View>
+        <View
+          style={{
+            width: '100%',
+            height: 20,
+            alignItems: 'center',
+            marginTop: -2,
+          }}>
+          {error ? (
+            <Text style={{color: 'red', fontSize: 14}}>{error}</Text>
+          ) : null}
         </View>
 
         <TouchableOpacity
-    onPress={()=>navigation.navigate('Landing')}
           style={{
             width: 340,
             borderRadius: 8,
             alignItems: 'center',
             height: 55,
             backgroundColor: 'gray',
-
-          }}>
+          }}
+          onPress={handleGetOTP}>
           <Text
             style={{
               fontSize: 15,
@@ -132,7 +156,6 @@ const Validation = ({navigation}) => {
           width: '100%',
           height: '40%',
           // backgroundColor:'red',
-        
         }}>
         <Image
           style={{width: 80, height: 130}}
@@ -143,11 +166,9 @@ const Validation = ({navigation}) => {
         </Text>
       </View>
     </View>
- 
   );
 };
 
 export default Validation;
 
 const styles = StyleSheet.create({});
-

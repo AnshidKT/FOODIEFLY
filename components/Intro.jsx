@@ -78,7 +78,7 @@ const Intro = ({navigation}) => {
                   Dineout
                 </Text>
               </View>
-              <Text style={{fontSize: 20, marginRight: 82}}>
+              <Text style={{fontSize: 20, marginRight: 82,color:'white'}}>
                 Order from top restaurants
               </Text>
 
