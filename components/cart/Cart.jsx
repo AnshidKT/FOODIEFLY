@@ -152,7 +152,7 @@ const Cart = ({navigation}) => {
               justifyContent: 'center',
               borderRadius: 10,
             }}>
-            <Image
+            {/* <Image
               style={{
                 width: '90%',
                 height: '90%',
@@ -160,7 +160,7 @@ const Cart = ({navigation}) => {
                 opacity: 0.2,
               }}
               source={require('../../imgs/cartoon.png')}
-            />
+            /> */}
             <View>
               <ScrollView
                 style={{

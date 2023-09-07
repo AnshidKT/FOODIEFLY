@@ -1,6 +1,7 @@
 const {datas, secnddatas, thrddatas, forthdata} = require('../data/Datas');
-import {useState, createContext} from 'react';
+import {useState, createContext,useEffect} from 'react';
 import {useContext} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const CartContext = createContext();
 
@@ -48,6 +49,60 @@ export const CartProvider = ({children}) => {
       0,
     );
   };
+
+
+
+
+
+
+
+// localstoragestarting..............................................................
+
+const saveCartToAsyncStorage = async () => {
+  try {
+    await AsyncStorage.setItem('@MyCart:key', JSON.stringify(cartItems));
+  } catch (error) {
+    console.error('Error saving cart data: ', error);
+  }
+};
+
+// Function to retrieve cart data from AsyncStorage
+const retrieveCartFromAsyncStorage = async () => {
+  try {
+    const storedCart = await AsyncStorage.getItem('@MyCart:key');
+    if (storedCart !== null) {
+      setCartItems(JSON.parse(storedCart));
+    }
+  } catch (error) {
+    console.error('Error retrieving cart data: ', error);
+  }
+};
+
+
+
+// localstorage
+// Load cart data from AsyncStorage when the component mounts
+useEffect(() => {
+  retrieveCartFromAsyncStorage();
+}, []);
+
+// Save cart data to AsyncStorage whenever the cartItems state changes
+useEffect(() => {
+  saveCartToAsyncStorage();
+}, [cartItems]);
+
+// locastorage.............................................................................
+
+
+
+
+
+
+
+
+
+
+
   return (
     <CartContext.Provider
       value={{cartItems, addToCart, decreaseQuantity, totalAmount}}>

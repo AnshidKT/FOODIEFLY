@@ -6,15 +6,87 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Modal,
 } from 'react-native';
 import React from 'react';
 import {FlatList} from 'react-native-gesture-handler';
 import {datas, forthdata, secnddatas, thrddatas} from '../data/Datas';
 import {useCart} from '../shopcontext/ShopContext';
+import {useState} from 'react';
 
 const FirstBody = ({navigation}) => {
   const {addToCart, cartItems} = useCart();
   console.log(cartItems);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [scndModalVisible, setscndModalVisible] = useState(false);
+
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [pinCode, setPinCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [addressError, setAddressError] = useState('');
+  const [pinCodeError, setPinCodeError] = useState('');
+  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [showCongratulations, setShowCongratulations] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  const scndtoggleModal = () => {
+    setscndModalVisible(!scndModalVisible);
+  };
+
+  const handleSubmit = () => {
+    // Reset all previous errors
+    setNameError('');
+    setAddressError('');
+    setPinCodeError('');
+    setPhoneNumberError('');
+
+    let hasError = false; // Track if there are any errors
+
+    // Validate input fields and set error messages
+    if (!name) {
+      setNameError('Please enter your name');
+      hasError = true; // There's an error
+    }
+    if (!address) {
+      setAddressError('Please enter your address');
+      hasError = true; // There's an error
+    }
+    if (!pinCode) {
+      setPinCodeError('Please enter a valid pin code');
+      hasError = true; // There's an error
+    }
+    if (!phoneNumber) {
+      setPhoneNumberError('Please enter a valid phone number');
+      hasError = true; // There's an error
+    }
+
+    // If there are errors, do not proceed
+    if (hasError) {
+      return;
+    }
+
+    // Process form submission here
+    // You can send the data to your server or perform any necessary actions
+
+    // Clear input fields
+    setName('');
+    setAddress('');
+    setPinCode('');
+    setPhoneNumber('');
+
+    // Close the modal
+
+    // Show Congratulations message
+    setShowCongratulations(true);
+
+    toggleModal();
+  };
+
   return (
     <View>
       <View
@@ -40,7 +112,7 @@ const FirstBody = ({navigation}) => {
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
                 flexDirection: 'row',
-                width: '90%',
+                width: '85%',
                 height: '60%',
                 // backgroundColor:'red'
               }}>
@@ -66,10 +138,251 @@ const FirstBody = ({navigation}) => {
               source={require('../../imgs/shopping-cart.png')}
             />
           </TouchableOpacity>
-          <Image
-            style={{width: 38, height: 38, marginRight: 17}}
-            source={require('../../imgs/person.png')}
-          />
+
+          <TouchableOpacity onPress={toggleModal}>
+            <Image
+              style={{width: 38, height: 38, marginRight: 17}}
+              source={require('../../imgs/person.png')}
+            />
+          </TouchableOpacity>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isModalVisible} // Step 2: Use state variable to control visibility
+            onRequestClose={() => {
+              setModalVisible(!isModalVisible);
+            }}>
+            <View
+              style={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0,0,0,0.7)',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View
+                style={{
+                  width: 280,
+                  height: 350,
+                  backgroundColor: 'white',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={scndModalVisible} // Step 2: Use state variable to control visibility
+                  onRequestClose={() => {
+                    setscndModalVisible(!scndModalVisible);
+                  }}>
+                  <View
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'black',
+                    }}></View>
+                </Modal>
+                {showCongratulations ? (
+                  <Text style={{color: 'green', fontSize: 14}}>
+                    Congratulations!
+                  </Text>
+                ) : null}
+                <View
+                  style={{
+                    width: '100%',
+                    height: 35,
+                    // backgroundColor: 'white',
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                  }}>
+                  <TouchableOpacity onPress={toggleModal} style={{}}>
+                    <Image
+                      style={{
+                        marginRight: 10,
+                        marginTop: 10,
+                        width: 35,
+                        height: 35,
+                      }}
+                      source={require('../../imgs/close.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    width: '90%',
+                    height: '80%',
+                    // backgroundColor: 'blue',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View
+                    style={{
+                      width: '100%',
+                      height: 40,
+                      // backgroundColor: 'gray',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 19,
+                        color: 'black',
+                        fontWeight: '700',
+                      }}>
+                      LOGIN
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: '80%',
+                      height: '78%',
+                      flexDirection: 'column',
+                      justifyContent: 'space-evenly',
+                      // backgroundColor: 'yellow',
+                    }}>
+                    <View
+                      style={{
+                        width: '100%',
+                        height: 40,
+                        // backgroundColor: 'yellow',
+                        justifyContent: 'center',
+                      }}>
+                      <TextInput
+                        style={{
+                          width: '100%',
+                          fontSize: 13,
+                          borderRadius: 8,
+                          height: 35,
+                          borderWidth: 1,
+                          padding: 10,
+                        }}
+                        placeholder="Your Name"
+                        value={name}
+                        onChangeText={text => setName(text)}
+                      />
+                      {nameError ? (
+                        <Text style={{color: 'red', fontSize: 11}}>
+                          {nameError}
+                        </Text>
+                      ) : null}
+                    </View>
+
+                    <View
+                      style={{
+                        width: '100%',
+                        height: 40,
+                        // backgroundColor: 'yellow',
+                        justifyContent: 'center',
+                      }}>
+                      <TextInput
+                        style={{
+                          width: '100%',
+                          fontSize: 13,
+                          borderRadius: 8,
+                          height: 35,
+                          borderWidth: 1,
+                          padding: 10,
+                        }}
+                        placeholder="Your Address"
+                        value={address}
+                        onChangeText={text => setAddress(text)}
+                      />
+                      {addressError ? (
+                        <Text style={{color: 'red', fontSize: 11}}>
+                          {addressError}
+                        </Text>
+                      ) : null}
+                    </View>
+
+                    <View
+                      style={{
+                        width: '100%',
+                        height: 40,
+                        // backgroundColor: 'yellow',
+                        justifyContent: 'center',
+                      }}>
+                      <TextInput
+                        style={{
+                          width: '100%',
+                          fontSize: 13,
+                          borderRadius: 8,
+                          height: 35,
+                          borderWidth: 1,
+                          padding: 10,
+                        }}
+                        placeholder="Pin Code"
+                        value={pinCode}
+                        onChangeText={text => setPinCode(text)}
+                      />
+                      {pinCodeError ? (
+                        <Text style={{color: 'red', fontSize: 11}}>
+                          {pinCodeError}
+                        </Text>
+                      ) : null}
+                    </View>
+
+                    <View
+                      style={{
+                        width: '100%',
+                        height: 40,
+                        // backgroundColor: 'yellow',
+                        justifyContent: 'center',
+                      }}>
+                      <TextInput
+                        style={{
+                          width: '100%',
+                          fontSize: 13,
+                          borderRadius: 8,
+                          height: 35,
+                          borderWidth: 1,
+                          padding: 10,
+                        }}
+                        placeholder="Phone Number"
+                        value={phoneNumber}
+                        onChangeText={text => setPhoneNumber(text)}
+                      />
+                      {phoneNumberError ? (
+                        <Text style={{color: 'red', fontSize: 11}}>
+                          {phoneNumberError}
+                        </Text>
+                      ) : null}
+                    </View>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleSubmit();
+                      scndtoggleModal();
+                    }}
+                    style={{
+                      width: 100,
+                      borderRadius: 10,
+                      height: 30,
+                      backgroundColor: '#ff751a',
+                    }}>
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '100%',
+                        width: '100%',
+                      }}>
+                      <Text style={{color: 'white', fontWeight: '700'}}>
+                        SUBMIT
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    width: '100%',
+                    height: 1,
+                    // backgroundColor: 'red',
+                  }}></View>
+              </View>
+            </View>
+          </Modal>
         </View>
         <View
           style={{
