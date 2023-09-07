@@ -24,20 +24,17 @@
 //   const handleSubmit = () => {
 //     if (!name || !address || !pinCode || !phoneNumber) {
 //       alert('Please fill in all fields');
-//       return; 
+//       return;
 //     }
 
-   
 //     setName('');
 //     setAddress('');
 //     setPinCode('');
 //     setPhoneNumber('');
 
-   
 //     toggleModal();
 //   };
-// } 
-
+// }
 
 //   return (
 //     <View>
@@ -110,7 +107,6 @@
 // }
 
 // export default YourComponent;
-
 
 // import React, { useState } from 'react';
 // import {
@@ -262,13 +258,8 @@
 
 // export default YourComponent;
 
-
-
-
-
-
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 
 export default function YourComponent() {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -334,7 +325,7 @@ export default function YourComponent() {
     <View>
       <TouchableOpacity onPress={toggleModal}>
         <Image
-          style={{ width: 38, height: 38, marginRight: 17 }}
+          style={{width: 38, height: 38, marginRight: 17}}
           source={require('../../imgs/person.png')}
         />
       </TouchableOpacity>
@@ -350,14 +341,14 @@ export default function YourComponent() {
         }}
         placeholder="Your Name"
         value={name}
-        onChangeText={(text) => setName(text)}
+        onChangeText={text => setName(text)}
       />
-      {nameError ? <Text style={{ color: 'red', fontSize: 11 }}>{nameError}</Text> : null}
-
-
+      {nameError ? (
+        <Text style={{color: 'red', fontSize: 11}}>{nameError}</Text>
+      ) : null}
 
       {/* Repeat the same pattern for other input fields */}
-      
+
       <TouchableOpacity
         onPress={handleSubmit}
         style={{
@@ -365,17 +356,15 @@ export default function YourComponent() {
           borderRadius: 10,
           height: 30,
           backgroundColor: '#ff751a',
-        }}
-      >
+        }}>
         <View
           style={{
             alignItems: 'center',
             justifyContent: 'center',
             height: '100%',
             width: '100%',
-          }}
-        >
-          <Text style={{ color: 'white', fontWeight: '700' }}>SUBMIT</Text>
+          }}>
+          <Text style={{color: 'white', fontWeight: '700'}}>SUBMIT</Text>
         </View>
       </TouchableOpacity>
     </View>
