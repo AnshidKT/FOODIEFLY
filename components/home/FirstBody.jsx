@@ -172,7 +172,7 @@ const FirstBody = ({navigation}) => {
                 <Modal
                   animationType="slide"
                   transparent={true}
-                  visible={scndModalVisible} // Step 2: Use state variable to control visibility
+                  visible={scndModalVisible} 
                   onRequestClose={() => {
                     setscndModalVisible(!scndModalVisible);
                   }}>
